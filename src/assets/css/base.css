@@ -1,0 +1,22 @@
+/* 清除浮动，解决高度坍塌 */
+.clear::before,
+.clear::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  text-decoration: none;
+  color: #161E27;
+}
+
+.middle {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.allColor {
+  /* background-color: #f5f1f1fb; */
+  background-color: #242323fb;
+}

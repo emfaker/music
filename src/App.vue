@@ -1,32 +1,60 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Header v-if="showHeader" :tabId="tabId"></Header>
+    <router-view />
+    <Footer v-if="showFooter"></Footer>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import Footer from "./components/home/Footer.vue";
+import Header from "./components/home/Header.vue";
+export default {
+  components: { Header, Footer },
+  name: "app",
+  provide() {
+    //提供变量，子组件通过inject注入
+    return {
+      reload: this.reload,
+    };
+  },
+  data() {
+    return {
+      isRouterAlive: true,
+    };
+  },
+  methods: {
+    // 刷新页面
+    reload() {
+      this.isRouterAlive = false;
+      console.log("嘤嘤嘤");
+      this.$nextTick(function () {
+        this.isRouterAlive = true;
+      });
+    },
+  },
+  mounted() {
+    document.title = "AyaneMusic";
+  },
+  computed: {
+    tabId() {
+      if (this.$route.meta.tabId) {
+        return this.$route.meta.tabId;
+      } else {
+        return 0;
+      }
+    },
+    showHeader() {
+      return this.$route.meta.showHeader;
+    },
+    showFooter() {
+      return this.$route.meta.showFooter;
+    },
   }
-}
+};
+</script>
+
+<style lang="scss" scoped>
+@import url("./assets/css/reset.css");
+@import url("./assets/css/base.css");
 </style>
